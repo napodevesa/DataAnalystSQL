@@ -1,4 +1,4 @@
-	-- Fill in the functions and columns
+	-----------
 SELECT
 	it.IncidentType,
 	COUNT(1) AS NumberOfRows,
@@ -15,7 +15,7 @@ WHERE
 GROUP BY
 	it.IncidentType;
 
-	-- Fill in the functions and columns
+-----------
 SELECT
 	COUNT(DISTINCT ir.IncidentTypeID) AS NumberOfIncidentTypes,
 	COUNT(DISTINCT ir.IncidentDate) AS NumberOfDaysWithIncidents
@@ -23,10 +23,10 @@ FROM dbo.IncidentRollup ir
 WHERE
 ir.IncidentDate BETWEEN '2019-08-01' AND '2019-10-31';
 
-	-- Fill in the functions and columns
+-----------
 SELECT
 	it.IncidentType,
-    -- Fill in the appropriate expression
+  
 	SUM(CASE WHEN ir.NumberOfIncidents > 5 THEN 1 ELSE 0 END) AS NumberOfBigIncidentDays,
     -- Number of incidents will always be at least 1, so
     -- no need to check the minimum value, just that it's
