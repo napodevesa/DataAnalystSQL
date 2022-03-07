@@ -104,3 +104,36 @@ ORDER BY
 	c.DayOfWeek,
 	c.IsWeekend;
 
+		--- ********** ---
+
+SELECT
+	ir.IncidentDate,
+	ir.NumberOfIncidents,
+
+	ROW_NUMBER() OVER (ORDER BY ir.NumberOfIncidents DESC) AS rownum,
+	RANK() OVER (ORDER BY ir.NumberOfIncidents DESC) AS rk,
+	DENSE_RANK() OVER (ORDER BY ir.NumberOfIncidents DESC) AS dr
+FROM dbo.IncidentRollup ir
+WHERE
+	ir.IncidentTypeID = 3
+	AND ir.NumberOfIncidents >= 8
+ORDER BY
+	ir.NumberOfIncidents DESC;
+
+			--- ********** ---
+SELECT
+	ir.IncidentDate,
+	ir.NumberOfIncidents,
+    
+    sum	(ir.NumberOfIncidents) OVER () AS SumOfIncidents,
+	min(ir.NumberOfIncidents) OVER () AS LowestNumberOfIncidents,
+	max(ir.NumberOfIncidents) OVER () AS HighestNumberOfIncidents,
+	count(ir.NumberOfIncidents) OVER () AS CountOfIncidents
+FROM dbo.IncidentRollup ir
+WHERE
+	ir.IncidentDate BETWEEN '2019-07-01' AND '2019-07-31'
+AND ir.IncidentTypeID = 3;
+
+			--- ********** ---
+
+
