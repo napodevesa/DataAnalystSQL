@@ -113,3 +113,77 @@ ALTER TABLE dim_country_sf ADD CONSTRAINT country_continent
    
 -- Output updated table
 SELECT * FROM dim_country_sf;
+
+----****----****----
+
+-- Create a new table to hold the cars rented by customers
+CREATE TABLE cust_rentals (
+  customer_id INT NOT NULL,
+  car_id VARCHAR(128) NULL,
+  invoice_id VARCHAR(128) NULL
+);
+
+-- Drop column from customers table to satisfy 1NF
+ALTER TABLE customers
+DROP COLUMN cars_rented,
+DROP COLUMN invoice_id;
+
+----****----****----
+
+-- Create a new table to satisfy 2NF
+-- Create a new table to satisfy 2NF
+CREATE TABLE cars (
+  car_id VARCHAR(256) NULL,
+  model VARCHAR(128),
+  manufacturer VARCHAR(128),
+  type_car VARCHAR(128),
+  condition VARCHAR(128),
+  color VARCHAR(128)
+);
+
+-- Drop columns in customer_rentals to satisfy 2NF
+ALTER TABLE customer_rentals
+DROP COLUMN model,
+DROP COLUMN manufacturer, 
+DROP COLUMN type_car,
+DROP COLUMN condition,
+DROP COLUMN color;
+
+----****----****----
+
+-- Create a new table to satisfy 3NF
+create table car_model(
+  model VARCHAR(128),
+  manufacturer VARCHAR(128),
+  type_car VARCHAR(128)
+);
+
+-- Drop columns in rental_cars to satisfy 3NF
+alter  table rental_cars
+drop column  manufacturer,
+drop column type_car  ;
+
+----****----****----
+
+-- Create a view for reviews with a score above 9
+CREATE VIEW high_scores AS
+SELECT * FROM REVIEWS
+WHERE score > 9;
+
+-- Count the number of self-released works in high_scores
+SELECT COUNT(*) FROM high_scores
+INNER JOIN labels 
+ON labels.reviewid = high_scores.reviewid
+WHERE label = 'self-released';
+
+
+----****----****----
+
+
+
+----****----****----
+
+
+
+----****----****----
+
