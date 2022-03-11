@@ -208,4 +208,7 @@ INNER JOIN labels
 ON labels.reviewid = reviews.reviewid;
 
 SELECT * FROM artist_title;
+----****----****----
+
+
 
